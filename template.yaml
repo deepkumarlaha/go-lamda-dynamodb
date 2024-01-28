@@ -1,0 +1,88 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: go1.x
+    Timeout: 10
+
+Resources:
+  CreateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: .
+      Events:
+        CreateUserApi:
+          Type: Api
+          Properties:
+            Path: /create-user
+            Method: POST
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+      
+
+  GetUsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: .
+      Events:
+        GetUsersApi:
+          Type: Api
+          Properties:
+            Path: /get-users
+            Method: GET
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+      
+
+  GetUserByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: .
+      Events:
+        GetUserByIdApi:
+          Type: Api
+          Properties:
+            Path: /get-user/{id}
+            Method: GET
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+      
+
+  UpdateUserByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: .
+      Events:
+        UpdateUserByIdApi:
+          Type: Api
+          Properties:
+            Path: /update-user/{id}
+            Method: PUT
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+      
+
+  DeleteUserByEmailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: .
+      Events:
+        DeleteUserByEmailApi:
+          Type: Api
+          Properties:
+            Path: /delete-user/{email}
+            Method: DELETE
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+      

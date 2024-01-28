@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Runtime: go1.x
+    Timeout: 10
+Resources:
+  CreateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: CreateUserFunction
+      Events:
+        CreateUserApi:
+          Type: Api
+          Properties:
+            Path: /create-user
+            Method: POST
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+    Metadata:
+      SamResourceId: CreateUserFunction
+  GetUsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: GetUsersFunction
+      Events:
+        GetUsersApi:
+          Type: Api
+          Properties:
+            Path: /get-users
+            Method: GET
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+    Metadata:
+      SamResourceId: GetUsersFunction
+  GetUserByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: GetUserByIdFunction
+      Events:
+        GetUserByIdApi:
+          Type: Api
+          Properties:
+            Path: /get-user/{id}
+            Method: GET
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+    Metadata:
+      SamResourceId: GetUserByIdFunction
+  UpdateUserByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: UpdateUserByIdFunction
+      Events:
+        UpdateUserByIdApi:
+          Type: Api
+          Properties:
+            Path: /update-user/{id}
+            Method: PUT
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+    Metadata:
+      SamResourceId: UpdateUserByIdFunction
+  DeleteUserByEmailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: DeleteUserByEmailFunction
+      Events:
+        DeleteUserByEmailApi:
+          Type: Api
+          Properties:
+            Path: /delete-user/{email}
+            Method: DELETE
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: UserTable
+    Metadata:
+      SamResourceId: DeleteUserByEmailFunction
