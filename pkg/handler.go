@@ -8,9 +8,15 @@ import (
 )
 
 // User represents a user entity
+// User represents a user entity
 type User struct {
-	UserID   string `json:"userID"`
-	UserName string `json:"userName"`
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	Phone   int    `json:"phone"`
+	Gender  string `json:"gender"`
+	Address string `json:"address"`
+	State   string `json:"state"`
+	Country string `json:"country"`
 	// Add other attributes as needed...
 }
 
@@ -32,8 +38,8 @@ func CreateUserHandler(request events.APIGatewayProxyRequest) (events.APIGateway
 }
 
 // GetUserHandler retrieves user information based on userID
-func GetUserHandler(userID string) (events.APIGatewayProxyResponse, error) {
-	user, err := GetUserByID(userID)
+func GetUserHandler(email string) (events.APIGatewayProxyResponse, error) {
+	user, err := GetUserByemail(email)
 	if err != nil {
 		return events.APIGatewayProxyResponse{StatusCode: 500, Body: "Error getting user"}, nil
 	}
@@ -66,9 +72,9 @@ func UpdateUserHandler(request events.APIGatewayProxyRequest) (events.APIGateway
 	return events.APIGatewayProxyResponse{StatusCode: 200, Body: string(responseBody)}, nil
 }
 
-// DeleteUserHandler removes a user based on userID
-func DeleteUserHandler(userID string) (events.APIGatewayProxyResponse, error) {
-	err := DeleteUser(userID)
+// DeleteUserHandler removes a user based on email
+func DeleteUserHandler(email string) (events.APIGatewayProxyResponse, error) {
+	err := DeleteUser(email)
 	if err != nil {
 		return events.APIGatewayProxyResponse{StatusCode: 500, Body: "Error deleting user"}, nil
 	}
